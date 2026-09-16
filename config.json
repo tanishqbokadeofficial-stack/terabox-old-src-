@@ -1,0 +1,45 @@
+{
+  "server": {
+    "port": 3456,
+    "host": "localhost"
+  },
+  "creatorMode": {
+    "referralLinkFile": "terabox_signupLink.txt",
+    "passwordFile": "password.txt",
+    "defaultPassword": "TeraBox2026@Pass!",
+    "tempMailProvider": "mailtm",
+    "fallbackProviders": ["1secmail", "guerrilla", "browser_tempmail"],
+    "headless": false,
+    "browserTimeoutSeconds": 60,
+    "retryCount": 3,
+    "otpTimeoutSeconds": 90,
+    "accountsPerProxy": 10,
+    "delayBetweenAccountsMs": 3000,
+    "cleanProfilesAfterCreation": true,
+    "stealthMode": false
+  },
+  "videoMode": {
+    "videoLinkFile": "video_link.txt",
+    "defaultWatchDurationSeconds": 10,
+    "headless": false,
+    "concurrency": 3,
+    "muteAudio": true,
+    "simulateInteractions": true,
+    "randomDelayBeforePlayMs": 300,
+    "autoLoopAccounts": true
+  },
+  "proxySettings": {
+    "enabled": false,
+    "proxyFile": "proxies.txt",
+    "rotationApiUrl": "",
+    "rotationMethod": "GET",
+    "rotateEveryAccounts": 10,
+    "autoRotateOnRateLimit": true
+  },
+  "system": {
+    "profilesDir": "./data/profiles",
+    "sessionsDir": "./data/sessions",
+    "accountsDbFile": "./data/accounts.json",
+    "logsDir": "./data/logs"
+  }
+}

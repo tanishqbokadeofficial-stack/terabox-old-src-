@@ -1,0 +1,10 @@
+# Proxy List - Add one proxy per line
+# Formats supported:
+# http://ip:port
+# http://username:password@ip:port
+# socks5://ip:port
+# socks5://username:password@ip:port
+# Leave empty or keep direct if you want to use direct connection
+# Example:
+# http://127.0.0.1:8080
+# http://user:pass123@proxy.example.com:3128
