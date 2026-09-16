@@ -1,0 +1,181 @@
+const fs = require('fs');
+const path = require('path');
+const { v4: uuidv4 } = require('uuid');
+const dbService = require('./dbService');
+const browserManager = require('./browserManager');
+const proxyManager = require('./proxyManager');
+
+class SessionManager {
+  // Test session validity for a given account
+  async verifySession(accountId) {
+    const account = dbService.getAccountById(accountId);
+    if (!account) return { valid: false, message: 'Account not found' };
+
+    const cookies = account.cookies || [];
+    if (cookies.length === 0) {
+      return { valid: false, message: 'No cookies found for account' };
+    }
+
+    const hasAuthCookie = cookies.some(c => 
+      c.name === 'ndus' || 
+      c.name.includes('session') || 
+      c.name.includes('PANWEB') || 
+      c.name.includes('BDUSS') ||
+      c.name.includes('csrf')
+    );
+
+    if (!hasAuthCookie) {
+      return { valid: false, message: 'Missing primary TeraBox auth cookies' };
+    }
+
+    return {
+      valid: true,
+      message: 'Session cookies valid and ready',
+      cookieCount: cookies.length,
+      lastUpdated: account.updatedAt || account.createdAt
+    };
+  }
+
+  // Launch interactive browser with restored session
+  async launchSessionBrowser(accountId, customUrl = 'https://www.terabox.com/main') {
+    const account = dbService.getAccountById(accountId);
+    if (!account) throw new Error('Account not found');
+
+    const profileName = `Interactive_${account.id}_${Date.now()}`;
+    const browserObj = await browserManager.launchBrowser({
+      profileName: profileName,
+      headless: false,
+      cookies: account.cookies || [],
+      sessionData: account.sessionData || {},
+      screencast: false
+    });
+
+    try {
+      await browserObj.page.goto(customUrl, { waitUntil: 'domcontentloaded', timeout: 35000 });
+    } catch (e) {}
+
+    return {
+      success: true,
+      accountId: account.id,
+      email: account.email,
+      message: `Browser launched with active session for ${account.email}`
+    };
+  }
+
+  // Interactive Login & Capture Engine:
+  // Opens a visible browser, lets user log in or complete verification, and captures full cookies & session into database!
+  async launchInteractiveLoginAndCapture(targetUrl = 'https://www.terabox.com/main', onLog = () => {}) {
+    const profileName = `Manual_Capture_${Date.now()}`;
+    onLog(`[Interactive Capture] Opening visible browser at ${targetUrl}...`, 'info');
+
+    const browserObj = await browserManager.launchBrowser({
+      profileName: profileName,
+      headless: false,
+      screencast: true
+    });
+
+    const { page, context } = browserObj;
+    await page.goto(targetUrl, { waitUntil: 'domcontentloaded', timeout: 45000 }).catch(() => {});
+
+    onLog(`[Interactive Capture] Please log in to TeraBox inside the opened browser window. Listening for session tokens...`, 'info');
+
+    // Poll for active login cookies
+    let capturedAccount = null;
+    const maxWaitMs = 180000; // 3 minutes
+    const startTime = Date.now();
+
+    while (Date.now() - startTime < maxWaitMs) {
+      try {
+        const cookies = await context.cookies();
+        const ndusCookie = cookies.find(c => c.name === 'ndus' || c.name === 'PANWEB_COOKIE');
+
+        if (ndusCookie && ndusCookie.value) {
+          // Detect user info from DOM or cookies
+          const userInfo = await page.evaluate(() => {
+            const userEl = document.querySelector('.user-info, .account-header, .header-user, .user-name');
+            return userEl ? userEl.innerText.trim() : null;
+          }).catch(() => null);
+
+          const localStorageData = await page.evaluate(() => {
+            const items = {};
+            for (let i = 0; i < localStorage.length; i++) {
+              const k = localStorage.key(i);
+              items[k] = localStorage.getItem(k);
+            }
+            return items;
+          }).catch(() => ({}));
+
+          const accountId = `TB-CAPTURED-${Date.now().toString(36).toUpperCase()}`;
+          const email = userInfo || `user_${Date.now().toString(36)}@terabox.com`;
+
+          capturedAccount = {
+            id: accountId,
+            email: email,
+            password: 'Saved_Interactive_Session',
+            createdAt: new Date().toISOString(),
+            cookies: cookies,
+            sessionData: localStorageData,
+            status: 'active',
+            watchCount: 0,
+            downloadCount: 0,
+            proxyUsed: 'Direct Connection',
+            notes: 'Captured via Interactive Browser Login'
+          };
+
+          dbService.addAccount(capturedAccount);
+          onLog(`[Interactive Capture] ✔ SUCCESS! Detected logged-in session for ${email}! Account saved to database!`, 'success');
+          break;
+        }
+      } catch (e) {}
+
+      await new Promise(r => setTimeout(r, 2000));
+    }
+
+    return capturedAccount;
+  }
+
+  // Export cookies to Netscape format (standard cookies.txt format)
+  exportToNetscape(cookies) {
+    let output = '# Netscape HTTP Cookie File\n# Generated by TeraBox Automation Tool\n\n';
+    (cookies || []).forEach(c => {
+      const domain = c.domain || '.terabox.com';
+      const flag = domain.startsWith('.') ? 'TRUE' : 'FALSE';
+      const path = c.path || '/';
+      const secure = c.secure ? 'TRUE' : 'FALSE';
+      const expiration = c.expires ? Math.floor(c.expires) : Math.floor(Date.now() / 1000) + 86400 * 365;
+      const name = c.name || '';
+      const value = c.value || '';
+      output += `${domain}\t${flag}\t${path}\t${secure}\t${expiration}\t${name}\t${value}\n`;
+    });
+    return output;
+  }
+
+  // Format accounts for export
+  exportAccounts(format = 'json') {
+    const accounts = dbService.getAccounts();
+
+    if (format === 'csv') {
+      const headers = ['ID', 'Email', 'Password', 'Status', 'CreatedAt', 'ViewsCount', 'DownloadsCount', 'ProxyUsed', 'ReferralLink'];
+      const rows = accounts.map(a => [
+        `"${a.id}"`,
+        `"${a.email}"`,
+        `"${a.password}"`,
+        `"${a.status}"`,
+        `"${a.createdAt}"`,
+        a.watchCount || 0,
+        a.downloadCount || 0,
+        `"${a.proxyUsed || ''}"`,
+        `"${a.referralLink || ''}"`
+      ].join(','));
+      return [headers.join(','), ...rows].join('\n');
+    }
+
+    if (format === 'txt') {
+      return accounts.map(a => `${a.email}:${a.password}`).join('\n');
+    }
+
+    return JSON.stringify(accounts, null, 2);
+  }
+}
+
+module.exports = new SessionManager();

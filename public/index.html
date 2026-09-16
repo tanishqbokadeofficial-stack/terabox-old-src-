@@ -1,0 +1,766 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TeraBox Account Automation & Management Tool — Two Mode System</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+  <div class="app-layout">
+    
+    <!-- Top Header -->
+    <header class="top-navbar">
+      <div class="brand-section">
+        <div class="logo-badge">
+          <i class="fa-solid fa-cloud-bolt fa-lg" style="color: #fff;"></i>
+        </div>
+        <div class="brand-title">
+          <h1>TeraBox Automation Tool</h1>
+          <div class="brand-subtitle">
+            <span class="live-indicator"></span>
+            <span id="systemStatusLabel">Two-Mode Engine Active</span>
+            <span style="color: var(--text-dark);">|</span>
+            <span style="font-family: var(--font-mono); font-size: 0.72rem; color: #38bdf8;">v2.8 Enterprise</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="system-stats-bar">
+        <div class="stat-pill">
+          <i class="fa-solid fa-users" style="color: #38bdf8;"></i>
+          <span>Accounts: <span class="val" id="topTotalAccounts">0</span></span>
+        </div>
+        <div class="stat-pill">
+          <i class="fa-solid fa-shield-halved" style="color: #10b981;"></i>
+          <span>Active Sessions: <span class="val" id="topActiveSessions" style="color: #10b981;">0</span></span>
+        </div>
+        <div class="stat-pill">
+          <i class="fa-solid fa-play" style="color: #a855f7;"></i>
+          <span>Views: <span class="val" id="topVideoViews" style="color: #a855f7;">0</span></span>
+        </div>
+        <div class="stat-pill">
+          <i class="fa-solid fa-download" style="color: #f59e0b;"></i>
+          <span>Downloads: <span class="val" id="topDownloads" style="color: #f59e0b;">0</span></span>
+        </div>
+        <div class="proxy-rotation-badge" id="proxyStatusBadge">
+          <i class="fa-solid fa-network-wired"></i>
+          <span>Proxy IP: <strong id="topProxyCount">0/10</strong> Created</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- Navigation Tabs -->
+    <nav class="nav-tab-container">
+      <button class="tab-btn active" data-tab="dashboard">
+        <i class="fa-solid fa-chart-pie"></i>
+        <span>Dashboard Overview</span>
+      </button>
+      <button class="tab-btn" data-tab="creator">
+        <i class="fa-solid fa-user-plus"></i>
+        <span>Mode 1: Account Creator</span>
+        <span class="badge" id="creatorRunningBadge" style="display: none; background: #0284c7;">RUNNING</span>
+      </button>
+      <button class="tab-btn" data-tab="watcher">
+        <i class="fa-solid fa-film"></i>
+        <span>Mode 2: Video Watch & Download</span>
+        <span class="badge" id="watcherRunningBadge" style="display: none; background: #a855f7;">RUNNING</span>
+      </button>
+      <button class="tab-btn" data-tab="downloads">
+        <i class="fa-solid fa-folder-arrow-down"></i>
+        <span>Downloaded Files</span>
+        <span class="badge" id="tabDownloadCount">0</span>
+      </button>
+      <button class="tab-btn" data-tab="accounts">
+        <i class="fa-solid fa-database"></i>
+        <span>Account Database</span>
+        <span class="badge" id="tabAccountCount">0</span>
+      </button>
+      <button class="tab-btn" data-tab="config">
+        <i class="fa-solid fa-sliders"></i>
+        <span>Files & Configuration</span>
+      </button>
+      <button class="tab-btn" data-tab="console">
+        <i class="fa-solid fa-terminal"></i>
+        <span>Live Console Logs</span>
+      </button>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-wrapper">
+
+      <!-- ============================================== -->
+      <!-- TAB 1: DASHBOARD OVERVIEW -->
+      <!-- ============================================== -->
+      <section id="tab-dashboard" class="tab-pane active">
+        <!-- Metric Cards -->
+        <div class="grid-4" style="margin-bottom: 24px;">
+          <div class="stat-widget">
+            <div class="stat-icon cyan">
+              <i class="fa-solid fa-id-card"></i>
+            </div>
+            <div class="stat-info">
+              <div class="stat-num" id="cardTotalAccounts">0</div>
+              <div class="stat-label">Total TeraBox Accounts</div>
+            </div>
+          </div>
+
+          <div class="stat-widget">
+            <div class="stat-icon emerald">
+              <i class="fa-solid fa-cookie-bite"></i>
+            </div>
+            <div class="stat-info">
+              <div class="stat-num" id="cardActiveSessions">0</div>
+              <div class="stat-label">Authenticated Sessions</div>
+            </div>
+          </div>
+
+          <div class="stat-widget">
+            <div class="stat-icon violet">
+              <i class="fa-solid fa-circle-play"></i>
+            </div>
+            <div class="stat-info">
+              <div class="stat-num" id="cardTotalViews">0</div>
+              <div class="stat-label">Completed Video Views</div>
+            </div>
+          </div>
+
+          <div class="stat-widget">
+            <div class="stat-icon amber">
+              <i class="fa-solid fa-circle-arrow-down"></i>
+            </div>
+            <div class="stat-info">
+              <div class="stat-num" id="cardTotalDownloads">0</div>
+              <div class="stat-label">Videos Downloaded</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Mode Quick Launchers -->
+        <div class="grid-2" style="margin-bottom: 24px;">
+          <!-- Mode 1 Card -->
+          <div class="card" style="border-left: 4px solid #38bdf8;">
+            <div class="card-header">
+              <div>
+                <div class="card-title">
+                  <i class="fa-solid fa-robot" style="color: #38bdf8;"></i>
+                  Mode 1: Automated Account Creator
+                </div>
+                <div class="card-subtitle">Auto-markup signup path from video link/main site, generate tempmail, extract OTP & save session.</div>
+              </div>
+            </div>
+            <p style="font-size: 0.84rem; color: var(--text-muted); margin-bottom: 18px;">
+              Navigates directly to your video link or landing page, triggers signup, switches to email registration, retrieves OTP from TempMail, applies <code>password.txt</code>, and cleans temporary browser profiles automatically.
+            </p>
+            <div style="display: flex; gap: 12px;">
+              <button class="btn btn-primary" id="dashStartCreatorBtn">
+                <i class="fa-solid fa-play"></i> Start Account Creator
+              </button>
+              <button class="btn btn-outline" onclick="switchTab('creator')">
+                <i class="fa-solid fa-gear"></i> Configure Creator Mode
+              </button>
+            </div>
+          </div>
+
+          <!-- Mode 2 Card -->
+          <div class="card" style="border-left: 4px solid #a855f7;">
+            <div class="card-header">
+              <div>
+                <div class="card-title">
+                  <i class="fa-solid fa-video" style="color: #a855f7;"></i>
+                  Mode 2: Video Watcher & Downloader
+                </div>
+                <div class="card-subtitle">Strict login first with saved cookies, open target video link, watch & download across all accounts.</div>
+              </div>
+            </div>
+            <p style="font-size: 0.84rem; color: var(--text-muted); margin-bottom: 18px;">
+              Confirms active authentication before performing actions. Supports <strong>Watch Only</strong>, <strong>Download Only</strong>, or <strong>Watch & Download</strong> simultaneously for all selected accounts.
+            </p>
+            <div style="display: flex; gap: 12px;">
+              <button class="btn btn-success" id="dashStartWatcherBtn">
+                <i class="fa-solid fa-play"></i> Start Watch & Download
+              </button>
+              <button class="btn btn-outline" onclick="switchTab('watcher')">
+                <i class="fa-solid fa-sliders"></i> Select Accounts & Modes
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Recent Accounts & Quick Table -->
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">
+              <i class="fa-solid fa-clock-rotate-left"></i>
+              Recent Account Activity
+            </div>
+            <button class="btn btn-outline btn-sm" onclick="switchTab('accounts')">
+              View All Database <i class="fa-solid fa-arrow-right"></i>
+            </button>
+          </div>
+          <div class="table-container">
+            <table class="custom-table" id="dashboardRecentTable">
+              <thead>
+                <tr>
+                  <th>Account ID</th>
+                  <th>Email</th>
+                  <th>Created Date</th>
+                  <th>Status</th>
+                  <th>Views Count</th>
+                  <th>Proxy Used</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <!-- Dynamically populated -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================================== -->
+      <!-- TAB 2: MODE 1 ACCOUNT CREATOR -->
+      <!-- ============================================== -->
+      <section id="tab-creator" class="tab-pane">
+        <!-- Live Workflow Stepper (10 Steps) -->
+        <div class="card" style="margin-bottom: 24px;">
+          <div class="card-header">
+            <div class="card-title">
+              <i class="fa-solid fa-diagram-project" style="color: #38bdf8;"></i>
+              Mode 1 Execution Workflow (Path Markup & TempMail Engine)
+            </div>
+            <span id="creatorCycleStatus" style="font-family: var(--font-mono); font-size: 0.82rem; color: #38bdf8;">Idle</span>
+          </div>
+
+          <div class="stepper-container">
+            <div class="stepper-line"></div>
+            <div class="stepper-line-progress" id="creatorStepperProgress"></div>
+
+            <div class="step-item" id="step-1">
+              <div class="step-circle">1</div>
+              <div class="step-label">Proxy Check</div>
+            </div>
+            <div class="step-item" id="step-2">
+              <div class="step-circle">2</div>
+              <div class="step-label">Stealth Profile</div>
+            </div>
+            <div class="step-item" id="step-3">
+              <div class="step-circle">3</div>
+              <div class="step-label">Open Video Page</div>
+            </div>
+            <div class="step-item" id="step-4">
+              <div class="step-circle">4</div>
+              <div class="step-label">Click Sign Up</div>
+            </div>
+            <div class="step-item" id="step-5">
+              <div class="step-circle">5</div>
+              <div class="step-label">Email Tab</div>
+            </div>
+            <div class="step-item" id="step-6">
+              <div class="step-circle">6</div>
+              <div class="step-label">Get TempMail</div>
+            </div>
+            <div class="step-item" id="step-7">
+              <div class="step-circle">7</div>
+              <div class="step-label">Request OTP</div>
+            </div>
+            <div class="step-item" id="step-8">
+              <div class="step-circle">8</div>
+              <div class="step-label">Extract OTP</div>
+            </div>
+            <div class="step-item" id="step-9">
+              <div class="step-circle">9</div>
+              <div class="step-label">Set Password</div>
+            </div>
+            <div class="step-item" id="step-10">
+              <div class="step-circle">10</div>
+              <div class="step-label">Verify & Save</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="grid-2">
+          <!-- Left: Creator Controls & Settings -->
+          <div class="card">
+            <div class="card-header">
+              <div class="card-title">
+                <i class="fa-solid fa-play-circle"></i>
+                Account Creator Configuration
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Landing Source / Target Video Link (Automatic Signup Path Markup)</label>
+              <input type="text" class="form-input" id="creatorVideoSourceInput" placeholder="https://terabox.com/s/1xxxxx or https://terabox.com">
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label">Preset Password (from password.txt)</label>
+                <input type="text" class="form-input" id="creatorPasswordInput" placeholder="TeraBox2026@Pass!">
+              </div>
+              <div class="form-group">
+                <label class="form-label">Temp Mail Provider</label>
+                <select class="form-select" id="creatorTempMailProvider">
+                  <option value="mailtm">Mail.tm API (High Reliability)</option>
+                  <option value="1secmail">1SecMail API</option>
+                  <option value="guerrilla">Guerrilla Mail API</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label">Accounts to Create in Batch</label>
+                <input type="number" class="form-input" id="creatorBatchCount" value="5" min="1" max="100">
+              </div>
+              <div class="form-group">
+                <label class="form-label">Proxy Auto-Rotation Count</label>
+                <input type="number" class="form-input" id="creatorRotateEvery" value="10" min="1" max="50">
+              </div>
+            </div>
+
+            <div class="form-row" style="margin-bottom: 20px;">
+              <label class="switch-label">
+                <input type="checkbox" class="switch-input" id="creatorHeadlessCheck">
+                <span class="switch-slider"></span>
+                <span>Headless Mode (Background)</span>
+              </label>
+
+              <label class="switch-label">
+                <input type="checkbox" class="switch-input" id="creatorUseReferralToggle">
+                <span class="switch-slider"></span>
+                <span>Use Referral Link If Present</span>
+              </label>
+            </div>
+
+            <div style="display: flex; gap: 12px;">
+              <button class="btn btn-primary" id="startCreatorModeBtn" style="flex: 2;">
+                <i class="fa-solid fa-play"></i> Start Account Creation
+              </button>
+              <button class="btn btn-danger" id="stopCreatorModeBtn" style="flex: 1;" disabled>
+                <i class="fa-solid fa-stop"></i> Stop
+              </button>
+            </div>
+          </div>
+
+          <!-- Right: Live Browser Screencast -->
+          <div class="card">
+            <div class="card-header">
+              <div class="card-title">
+                <i class="fa-solid fa-desktop"></i>
+                Live Browser Automation Viewport
+              </div>
+              <span class="screencast-live-badge" id="screencastBadge" style="display: none;">
+                <span class="live-indicator" style="background: #fff; width: 6px; height: 6px;"></span> LIVE
+              </span>
+            </div>
+
+            <div class="screencast-wrapper" id="creatorScreencastBox">
+              <div class="screencast-placeholder" id="screencastPlaceholder">
+                <i class="fa-solid fa-globe fa-3x" style="color: var(--text-dark);"></i>
+                <span>Live browser viewport will render here in real-time.</span>
+              </div>
+              <img id="screencastImg" style="display: none;" alt="Live Browser Screencast">
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================================== -->
+      <!-- TAB 3: MODE 2 VIDEO WATCH & DOWNLOAD -->
+      <!-- ============================================== -->
+      <section id="tab-watcher" class="tab-pane">
+        <div class="grid-2" style="margin-bottom: 24px;">
+          <!-- Left: Video Mode Configuration -->
+          <div class="card">
+            <div class="card-header">
+              <div class="card-title">
+                <i class="fa-solid fa-clapperboard" style="color: #a855f7;"></i>
+                Video Watching & Downloading Configuration
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Target TeraBox Video Link (from video_link.txt)</label>
+              <input type="text" class="form-input" id="watcherVideoLinkInput" placeholder="https://terabox.com/s/1xxxxx">
+            </div>
+
+            <!-- Action Selector: Watch, Download, or Watch & Download -->
+            <div class="form-group">
+              <label class="form-label">Select Execution Action</label>
+              <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px;">
+                <button type="button" class="btn btn-outline mode-action-btn active" data-action="watch_and_download" id="actionBtnBoth">
+                  <i class="fa-solid fa-fire"></i> Watch & Download
+                </button>
+                <button type="button" class="btn btn-outline mode-action-btn" data-action="watch" id="actionBtnWatch">
+                  <i class="fa-solid fa-play"></i> Watch Only
+                </button>
+                <button type="button" class="btn btn-outline mode-action-btn" data-action="download" id="actionBtnDownload">
+                  <i class="fa-solid fa-download"></i> Download Only
+                </button>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label">Watch Duration (Seconds per Account)</label>
+                <input type="number" class="form-input" id="watcherDurationInput" value="35" min="10" max="600">
+              </div>
+              <div class="form-group">
+                <label class="form-label">Strict Login Check</label>
+                <div style="padding: 10px; background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.3); border-radius: 8px; font-size: 0.8rem; color: #34d399;">
+                  <i class="fa-solid fa-check-circle"></i> Login strictly verified before watch/download
+                </div>
+              </div>
+            </div>
+
+            <div class="form-row" style="margin-bottom: 20px;">
+              <label class="switch-label">
+                <input type="checkbox" class="switch-input" id="watcherHeadlessCheck">
+                <span class="switch-slider"></span>
+                <span>Headless Mode</span>
+              </label>
+
+              <label class="switch-label">
+                <input type="checkbox" class="switch-input" id="watcherMuteCheck" checked>
+                <span class="switch-slider"></span>
+                <span>Mute Browser Audio</span>
+              </label>
+            </div>
+
+            <div style="display: flex; gap: 12px;">
+              <button class="btn btn-success" id="startWatcherModeBtn" style="flex: 2;">
+                <i class="fa-solid fa-play"></i> Start Video Process
+              </button>
+              <button class="btn btn-danger" id="stopWatcherModeBtn" style="flex: 1;" disabled>
+                <i class="fa-solid fa-stop"></i> Stop
+              </button>
+            </div>
+          </div>
+
+          <!-- Right: Video Mode Progress Card -->
+          <div class="card">
+            <div class="card-header">
+              <div class="card-title">
+                <i class="fa-solid fa-bars-progress"></i>
+                Watching & Downloading Tracker
+              </div>
+              <span id="watcherStatusText" style="font-family: var(--font-mono); font-size: 0.82rem; color: #a855f7;">Ready</span>
+            </div>
+
+            <div style="margin-bottom: 16px;">
+              <div style="display: flex; justify-content: space-between; font-size: 0.84rem; margin-bottom: 6px;">
+                <span id="watcherCurrentAccountLabel">Account: None</span>
+                <span id="watcherProgressPercent" style="font-family: var(--font-mono); font-weight: 700; color: #a855f7;">0%</span>
+              </div>
+              <div style="height: 8px; background: rgba(255,255,255,0.08); border-radius: 4px; overflow: hidden;">
+                <div id="watcherProgressBar" style="width: 0%; height: 100%; background: linear-gradient(90deg, #a855f7, #38bdf8); transition: width 0.3s ease;"></div>
+              </div>
+            </div>
+
+            <div class="grid-4" style="gap: 12px; margin-top: 20px;">
+              <div style="background: var(--bg-input); padding: 12px; border-radius: 8px; text-align: center;">
+                <div style="font-size: 0.75rem; color: var(--text-muted);">Queue Size</div>
+                <div id="watcherTotalQueue" style="font-size: 1.4rem; font-weight: 700; font-family: var(--font-mono); color: #fff;">0</div>
+              </div>
+              <div style="background: var(--bg-input); padding: 12px; border-radius: 8px; text-align: center;">
+                <div style="font-size: 0.75rem; color: var(--text-muted);">Watched</div>
+                <div id="watcherSuccessCount" style="font-size: 1.4rem; font-weight: 700; font-family: var(--font-mono); color: #a855f7;">0</div>
+              </div>
+              <div style="background: var(--bg-input); padding: 12px; border-radius: 8px; text-align: center;">
+                <div style="font-size: 0.75rem; color: var(--text-muted);">Downloaded</div>
+                <div id="watcherDownloadCount" style="font-size: 1.4rem; font-weight: 700; font-family: var(--font-mono); color: #10b981;">0</div>
+              </div>
+              <div style="background: var(--bg-input); padding: 12px; border-radius: 8px; text-align: center;">
+                <div style="font-size: 0.75rem; color: var(--text-muted);">Failed</div>
+                <div id="watcherFailedCount" style="font-size: 1.4rem; font-weight: 700; font-family: var(--font-mono); color: #ef4444;">0</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Account Selection Table for Video Watching -->
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">
+              <i class="fa-solid fa-list-check"></i>
+              Select Stored Accounts for Video Tasks
+            </div>
+            <div style="display: flex; gap: 10px;">
+              <button class="btn btn-outline btn-sm" id="selectAllWatcherAccountsBtn">
+                <i class="fa-solid fa-check-double"></i> Select All Active
+              </button>
+              <button class="btn btn-outline btn-sm" id="deselectAllWatcherAccountsBtn">
+                Deselect All
+              </button>
+            </div>
+          </div>
+
+          <div class="table-container">
+            <table class="custom-table" id="watcherAccountTable">
+              <thead>
+                <tr>
+                  <th style="width: 40px;"><input type="checkbox" id="watcherHeaderCheckbox"></th>
+                  <th>Account ID</th>
+                  <th>Email</th>
+                  <th>Login & Session Status</th>
+                  <th>Views</th>
+                  <th>Downloads</th>
+                  <th>Last Activity</th>
+                </tr>
+              </thead>
+              <tbody>
+                <!-- Populated dynamically -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================================== -->
+      <!-- TAB 4: DOWNLOADED FILES -->
+      <!-- ============================================== -->
+      <section id="tab-downloads" class="tab-pane">
+        <div class="card">
+          <div class="card-header">
+            <div>
+              <div class="card-title">
+                <i class="fa-solid fa-folder-arrow-down" style="color: #f59e0b;"></i>
+                Downloaded TeraBox Videos
+              </div>
+              <div class="card-subtitle">Saved video files captured from authenticated sessions in Mode 2.</div>
+            </div>
+            <button class="btn btn-outline btn-sm" id="refreshDownloadsBtn">
+              <i class="fa-solid fa-rotate"></i> Refresh Files
+            </button>
+          </div>
+
+          <div class="table-container">
+            <table class="custom-table" id="downloadsTable">
+              <thead>
+                <tr>
+                  <th>Filename</th>
+                  <th>Size</th>
+                  <th>Downloaded By Account</th>
+                  <th>Saved Timestamp</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="downloadsTableBody">
+                <!-- Dynamically populated -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================================== -->
+      <!-- TAB 5: ACCOUNT DATABASE -->
+      <!-- ============================================== -->
+      <section id="tab-accounts" class="tab-pane">
+        <div class="card">
+          <div class="card-header">
+            <div>
+              <div class="card-title">
+                <i class="fa-solid fa-database"></i>
+                TeraBox Stored Accounts Database
+              </div>
+              <div class="card-subtitle">Manage stored credentials, restore sessions, and inspect extracted cookies.</div>
+            </div>
+            <div style="display: flex; gap: 10px;">
+              <button class="btn btn-outline btn-sm" id="exportJsonBtn">
+                <i class="fa-solid fa-file-code"></i> Export JSON
+              </button>
+              <button class="btn btn-outline btn-sm" id="exportCsvBtn">
+                <i class="fa-solid fa-file-csv"></i> Export CSV
+              </button>
+              <button class="btn btn-outline btn-sm" id="exportTxtBtn">
+                <i class="fa-solid fa-file-lines"></i> Export TXT
+              </button>
+              <button class="btn btn-danger btn-sm" id="bulkDeleteAccountsBtn">
+                <i class="fa-solid fa-trash"></i> Delete Selected
+              </button>
+            </div>
+          </div>
+
+          <!-- Filter & Search Bar -->
+          <div style="display: flex; gap: 14px; margin-bottom: 18px; align-items: center;">
+            <div style="flex: 1;">
+              <input type="text" class="form-input" id="accountSearchInput" placeholder="🔍 Search accounts by ID, Email, or Proxy IP...">
+            </div>
+            <div style="width: 200px;">
+              <select class="form-select" id="accountStatusFilter">
+                <option value="all">All Statuses</option>
+                <option value="active">Active Only</option>
+                <option value="inactive">Inactive Only</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="table-container">
+            <table class="custom-table" id="masterAccountTable">
+              <thead>
+                <tr>
+                  <th style="width: 40px;"><input type="checkbox" id="masterHeaderCheckbox"></th>
+                  <th>ID</th>
+                  <th>Email</th>
+                  <th>Password</th>
+                  <th>Status</th>
+                  <th>Created</th>
+                  <th>Views</th>
+                  <th>Downloads</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="masterAccountTableBody">
+                <!-- Populated via JS -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================================== -->
+      <!-- TAB 6: CONFIGURATION & FILES -->
+      <!-- ============================================== -->
+      <section id="tab-config" class="tab-pane">
+        <div class="grid-2">
+          <!-- terabox_signupLink.txt & password.txt -->
+          <div class="card">
+            <div class="card-header">
+              <div class="card-title">
+                <i class="fa-solid fa-link" style="color: #38bdf8;"></i>
+                terabox_signupLink.txt & video_link.txt
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Referral Signup URL (Optional)</label>
+              <input type="text" class="form-input" id="cfgSignupLink">
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Target Video URL (video_link.txt)</label>
+              <input type="text" class="form-input" id="cfgVideoLink">
+            </div>
+
+            <div class="card-header" style="margin-top: 24px;">
+              <div class="card-title">
+                <i class="fa-solid fa-key" style="color: #10b981;"></i>
+                password.txt
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Preset Account Password</label>
+              <input type="text" class="form-input" id="cfgPassword">
+            </div>
+
+            <button class="btn btn-primary btn-block" id="saveConfigFilesBtn" style="margin-top: 14px;">
+              <i class="fa-solid fa-floppy-disk"></i> Save & Sync All Files
+            </button>
+          </div>
+
+          <!-- proxies.txt & Rotation Settings -->
+          <div class="card">
+            <div class="card-header">
+              <div class="card-title">
+                <i class="fa-solid fa-network-wired" style="color: #f59e0b;"></i>
+                proxies.txt & Proxy Rotation API
+              </div>
+              <button class="btn btn-outline btn-sm" id="testProxyBtn">
+                <i class="fa-solid fa-bolt"></i> Test Proxy
+              </button>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Proxy Rotation API Endpoint (Optional)</label>
+              <input type="text" class="form-input" id="cfgRotationApiUrl" placeholder="https://proxy-provider.com/api/rotate?key=...">
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Proxy List (One per line: http://ip:port or http://user:pass@ip:port)</label>
+              <textarea class="form-textarea" id="cfgProxies" rows="8" placeholder="http://127.0.0.1:8080&#10;socks5://user:pass@1.2.3.4:1080"></textarea>
+            </div>
+
+            <button class="btn btn-outline btn-block" id="manualRotateProxyBtn">
+              <i class="fa-solid fa-rotate"></i> Trigger Immediate Proxy Rotation
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================================== -->
+      <!-- TAB 7: LIVE CONSOLE & LOGS -->
+      <!-- ============================================== -->
+      <section id="tab-console" class="tab-pane">
+        <div class="terminal-card" style="height: 650px;">
+          <div class="terminal-header">
+            <div class="terminal-controls">
+              <span class="dot red"></span>
+              <span class="dot yellow"></span>
+              <span class="dot green"></span>
+              <span style="font-family: var(--font-mono); font-size: 0.8rem; margin-left: 8px; color: var(--text-muted);">system.terabox-automation.log</span>
+            </div>
+            <div style="display: flex; gap: 10px; align-items: center;">
+              <label class="switch-label" style="font-size: 0.75rem;">
+                <input type="checkbox" class="switch-input" id="autoScrollLogs" checked>
+                <span class="switch-slider" style="width: 32px; height: 18px;"></span>
+                <span>Auto-Scroll</span>
+              </label>
+              <button class="btn btn-outline btn-sm" id="clearLogsBtn">
+                <i class="fa-solid fa-eraser"></i> Clear
+              </button>
+            </div>
+          </div>
+          <div class="terminal-body" id="terminalLogsContainer">
+            <div class="log-entry">
+              <span class="log-time">[00:00:00]</span>
+              <span class="log-info">[System] TeraBox Automation & Management Tool v2.8 initialized. Ready for Mode 1 & Mode 2.</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- Cookie & Session Inspector Modal -->
+    <div class="modal-overlay" id="sessionModal">
+      <div class="modal-box">
+        <div class="modal-header">
+          <h3 style="font-family: var(--font-display); font-size: 1.15rem; color: #fff;">
+            <i class="fa-solid fa-cookie-bite" style="color: #38bdf8;"></i> Account Session & Cookies
+          </h3>
+          <button class="modal-close" onclick="closeSessionModal()">&times;</button>
+        </div>
+
+        <div style="margin-bottom: 16px;">
+          <div style="font-size: 0.82rem; color: var(--text-muted);" id="modalAccountEmail">Email: ...</div>
+          <div style="font-size: 0.82rem; color: var(--text-muted);" id="modalAccountId">ID: ...</div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Captured Cookies (JSON)</label>
+          <textarea class="form-textarea" id="modalCookieJson" rows="9" readonly></textarea>
+        </div>
+
+        <div style="display: flex; gap: 10px; justify-content: flex-end;">
+          <button class="btn btn-outline btn-sm" id="copyCookiesJsonBtn">
+            <i class="fa-solid fa-copy"></i> Copy JSON
+          </button>
+          <button class="btn btn-outline btn-sm" id="copyNetscapeBtn">
+            <i class="fa-solid fa-file-export"></i> Copy Netscape Format
+          </button>
+          <button class="btn btn-primary btn-sm" id="modalLaunchBrowserBtn">
+            <i class="fa-solid fa-arrow-up-right-from-square"></i> Open in Browser with Session
+          </button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
