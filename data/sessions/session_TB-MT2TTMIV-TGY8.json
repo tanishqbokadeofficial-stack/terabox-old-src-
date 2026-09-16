@@ -1,0 +1,176 @@
+{
+  "id": "TB-MT2TTMIV-TGY8",
+  "email": "tb_44qgmsg8@emalupe.com",
+  "cookies": [
+    {
+      "name": "PANWEB",
+      "value": "1",
+      "domain": ".1024terabox.com",
+      "path": "/",
+      "expires": 1818845286.359825,
+      "httpOnly": false,
+      "secure": false,
+      "sameSite": "Lax"
+    },
+    {
+      "name": "shareRedirectDomain",
+      "value": "terabox.app",
+      "domain": "1024terabox.com",
+      "path": "/",
+      "expires": 1792493286.360005,
+      "httpOnly": true,
+      "secure": false,
+      "sameSite": "Lax"
+    },
+    {
+      "name": "csrfToken",
+      "value": "CRhMRSYXO58E6dTkQSCsobNL",
+      "domain": "www.terabox.app",
+      "path": "/",
+      "expires": -1,
+      "httpOnly": false,
+      "secure": false,
+      "sameSite": "Lax"
+    },
+    {
+      "name": "browserid",
+      "value": "JlkdIxZ2b8Qh3gDCGiJVId8K6Ed_HrNwGEPVUMVwU9D9skLNruYOgHUZQK0=",
+      "domain": ".terabox.app",
+      "path": "/",
+      "expires": 1792493287.21415,
+      "httpOnly": false,
+      "secure": false,
+      "sameSite": "Lax"
+    },
+    {
+      "name": "lang",
+      "value": "en",
+      "domain": ".terabox.app",
+      "path": "/",
+      "expires": 1789901287.214188,
+      "httpOnly": false,
+      "secure": false,
+      "sameSite": "Lax"
+    },
+    {
+      "name": "TSID",
+      "value": "qW4Nc3KJr8ROLQkKKm1IxIY70BKcisRN",
+      "domain": ".terabox.app",
+      "path": "/",
+      "expires": 1818845287.214204,
+      "httpOnly": false,
+      "secure": false,
+      "sameSite": "Lax"
+    },
+    {
+      "name": "shareUpdateRandom",
+      "value": "90",
+      "domain": ".terabox.app",
+      "path": "/",
+      "expires": 1792493287.214222,
+      "httpOnly": true,
+      "secure": false,
+      "sameSite": "Lax"
+    },
+    {
+      "name": "ndut_fmt",
+      "value": "5D76464865AFFA857DB06705D9D045EE8A3B8572D876B2585BEB7BAB9C2A6768",
+      "domain": "www.terabox.app",
+      "path": "/",
+      "expires": 1789901289,
+      "httpOnly": false,
+      "secure": false,
+      "sameSite": "Lax"
+    },
+    {
+      "name": "ndut_fmv",
+      "value": "5d76464865affa857db06705d9d045ee3be3c1d1165d8b4d050e964ebe123322850d56b15abddd66a468bb4a6d367cb8d4d3d23393468ad97e5949720b7e8fadb87a6170593b46358c03e4d2a7ef8e99dede75f6217ce980e985a8152324d45b89bfa93f944e1e901b932668c0bbd447",
+      "domain": "www.terabox.app",
+      "path": "/",
+      "expires": 1789901289.398909,
+      "httpOnly": false,
+      "secure": false,
+      "sameSite": "Lax"
+    },
+    {
+      "name": "_gcl_au",
+      "value": "1.1.927491760.1787309290",
+      "domain": ".terabox.app",
+      "path": "/",
+      "expires": 1795085289,
+      "httpOnly": false,
+      "secure": false,
+      "sameSite": "Lax"
+    },
+    {
+      "name": "_ga",
+      "value": "GA1.1.1916830805.1787309290",
+      "domain": ".terabox.app",
+      "path": "/",
+      "expires": 1821869289.777738,
+      "httpOnly": false,
+      "secure": false,
+      "sameSite": "Lax"
+    },
+    {
+      "name": "_ga_K6JMPYL99R",
+      "value": "GS2.1.s1787309289$o1$g0$t1787309289$j60$l0$h0",
+      "domain": ".terabox.app",
+      "path": "/",
+      "expires": 1821869289.798183,
+      "httpOnly": false,
+      "secure": false,
+      "sameSite": "Lax"
+    },
+    {
+      "name": "test_cookie",
+      "value": "CheckForPermission",
+      "domain": ".doubleclick.net",
+      "path": "/",
+      "expires": 1787310190.195256,
+      "httpOnly": false,
+      "secure": true,
+      "sameSite": "None"
+    },
+    {
+      "name": "g_state",
+      "value": "{\"i_l\":0,\"i_ll\":1787309292106,\"i_b\":\"z/TFxlAn5zNjg46yL986PaH2E+AEi1nb6NoSzp+0H+k\",\"i_e\":{\"enable_itp_optimization\":24},\"i_et\":1787309292106}",
+      "domain": "www.terabox.app",
+      "path": "/",
+      "expires": 1802861292,
+      "httpOnly": false,
+      "secure": false,
+      "sameSite": "Lax"
+    },
+    {
+      "name": "NID",
+      "value": "534=sPkR3sh3PCAvQmKzuedILxBdh08KFWMbu9AVftp8wpWmvDVQGBLw63EaZIsa2qGN3-y_2J6jRIIj2vqkEPJ8jE6mGUChHDzWF1WwRrF4jC7t6HpAByfvRVidXi59oMtZ9tkXanIeZjyvN8lgcVrWTK1IqCd4WRp57LPJyxTa_zITlOUK0vwgE-EN7hJtFIpcXkhjwYg",
+      "domain": ".google.com",
+      "path": "/",
+      "expires": 1803120498.443998,
+      "httpOnly": true,
+      "secure": true,
+      "sameSite": "None"
+    },
+    {
+      "name": "ri",
+      "value": "dm",
+      "domain": ".terabox.app",
+      "path": "/",
+      "expires": 1787395706.413597,
+      "httpOnly": false,
+      "secure": true,
+      "sameSite": "Lax"
+    }
+  ],
+  "sessionData": {
+    "DOC_CHAT_EXPAND": "true",
+    "redirect_surl": "1JfqxU4ikKu67SKF8cxb0Q",
+    "VIDEO_CHAT_FOLDED": "false",
+    "_gcl_ls": "{\"schema\":\"gcl\",\"version\":1,\"gsid_dc\":{\"value\":{\"joinId\":\"jG14oJZdRBwvHjRAYGVJ19txTnAPITMppg\",\"lastJoinedTimeMs\":1787309289732},\"expires\":1787309589732},\"gcl_ctr\":{\"value\":{\"value\":0,\"timeouts\":0,\"errors\":0,\"eopCount\":0,\"creationTimeMs\":1787309289735},\"expires\":1795085289735}}",
+    "ai_link_ratio": "10",
+    "webSwiperBannerAb": "13",
+    "fbapc_756701921753953": "{\"config\":{\"fedcmDefault\":false},\"expiresAt\":1787395689474}"
+  },
+  "updatedAt": "2026-08-21T10:48:41.289Z"
+}

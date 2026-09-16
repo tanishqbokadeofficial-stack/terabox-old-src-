@@ -1,0 +1,40 @@
+{
+  "id": "TB-MT1DSZZY-L3HO",
+  "email": "tb_vopbpw3s@emalupe.com",
+  "cookies": [
+    {
+      "name": "ndus",
+      "value": "Y8f2411c35f844dbb9873ac5159a050f7",
+      "domain": ".terabox.com",
+      "path": "/"
+    },
+    {
+      "name": "terabox_session",
+      "value": "s_8f2411c35f844dbb9873ac5159a050f7",
+      "domain": ".terabox.com",
+      "path": "/"
+    },
+    {
+      "name": "PANWEB_COOKIE",
+      "value": "pwd_1787221952063",
+      "domain": ".terabox.com",
+      "path": "/"
+    },
+    {
+      "name": "csrfToken",
+      "value": "csrf_451ec249",
+      "domain": ".terabox.com",
+      "path": "/"
+    }
+  ],
+  "sessionData": {
+    "DOC_CHAT_EXPAND": "true",
+    "redirect_surl": "1JfqxU4ikKu67SKF8cxb0Q",
+    "VIDEO_CHAT_FOLDED": "false",
+    "_gcl_ls": "{\"schema\":\"gcl\",\"version\":1,\"gsid_dc\":{\"value\":{\"joinId\":\"83k6NpZNBInuUbQzbhgnoN2TJOxQ1JhS2Q\",\"lastJoinedTimeMs\":1787221856368},\"expires\":1787222156368},\"gcl_ctr\":{\"value\":{\"value\":0,\"timeouts\":0,\"errors\":0,\"eopCount\":0,\"creationTimeMs\":1787221856371},\"expires\":1794997856371}}",
+    "ai_link_ratio": "43",
+    "webSwiperBannerAb": "12",
+    "fbapc_756701921753953": "{\"config\":{\"fedcmDefault\":false},\"expiresAt\":1787308256139}"
+  },
+  "updatedAt": "2026-08-20T10:32:32.064Z"
+}

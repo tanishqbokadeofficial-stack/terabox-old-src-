@@ -1,0 +1,176 @@
+{
+  "id": "TB-MT2TYBTW-8V4K",
+  "email": "tb_f9hsp7ro@emalupe.com",
+  "cookies": [
+    {
+      "name": "PANWEB",
+      "value": "1",
+      "domain": ".1024terabox.com",
+      "path": "/",
+      "expires": 1818845504.962304,
+      "httpOnly": false,
+      "secure": false,
+      "sameSite": "Lax"
+    },
+    {
+      "name": "shareRedirectDomain",
+      "value": "1024tera.com",
+      "domain": "1024terabox.com",
+      "path": "/",
+      "expires": 1792493504.962464,
+      "httpOnly": true,
+      "secure": false,
+      "sameSite": "Lax"
+    },
+    {
+      "name": "csrfToken",
+      "value": "JOlPNkyX7WIWzTjyYwwT1dYg",
+      "domain": "www.1024tera.com",
+      "path": "/",
+      "expires": -1,
+      "httpOnly": false,
+      "secure": false,
+      "sameSite": "Lax"
+    },
+    {
+      "name": "browserid",
+      "value": "qVzYnejb8KBLk0yke1d6O5zOncO7VM48gG5Vqy7sopqf_ld4zCLu4gajnxk=",
+      "domain": ".1024tera.com",
+      "path": "/",
+      "expires": 1792493505.826098,
+      "httpOnly": false,
+      "secure": false,
+      "sameSite": "Lax"
+    },
+    {
+      "name": "lang",
+      "value": "en",
+      "domain": ".1024tera.com",
+      "path": "/",
+      "expires": 1789901505.826144,
+      "httpOnly": false,
+      "secure": false,
+      "sameSite": "Lax"
+    },
+    {
+      "name": "TSID",
+      "value": "CHcVbPKXssh8O8Aet7ih1XeS4WfWnVL0",
+      "domain": ".1024tera.com",
+      "path": "/",
+      "expires": 1818845505.826167,
+      "httpOnly": false,
+      "secure": false,
+      "sameSite": "Lax"
+    },
+    {
+      "name": "shareUpdateRandom",
+      "value": "78",
+      "domain": ".1024tera.com",
+      "path": "/",
+      "expires": 1792493505.826194,
+      "httpOnly": true,
+      "secure": false,
+      "sameSite": "Lax"
+    },
+    {
+      "name": "ndut_fmt",
+      "value": "625CD08D6D86D19A42D71B92174C2593FFC7990F60D7B046834CD105FF486C9D",
+      "domain": "www.1024tera.com",
+      "path": "/",
+      "expires": 1789901508,
+      "httpOnly": false,
+      "secure": false,
+      "sameSite": "Lax"
+    },
+    {
+      "name": "ndut_fmv",
+      "value": "af1ccfa156dcb738775c4846e8d2d737fae15d266b03a106f67f1d9af88bc78df03b5a3ae7463ecbfa5135f41c09e9ed12a876c2c6eca1ed12a81cee925d7be17ce567240ea697d839262b38bff3f00af7aa24f3dca176861a0262a848d369be589fe72717f48374549b3c5ff4bc5050",
+      "domain": "www.1024tera.com",
+      "path": "/",
+      "expires": 1789901509.119416,
+      "httpOnly": false,
+      "secure": false,
+      "sameSite": "Lax"
+    },
+    {
+      "name": "_gcl_au",
+      "value": "1.1.546621256.1787309510",
+      "domain": ".1024tera.com",
+      "path": "/",
+      "expires": 1795085509,
+      "httpOnly": false,
+      "secure": false,
+      "sameSite": "Lax"
+    },
+    {
+      "name": "_ga",
+      "value": "GA1.1.555039493.1787309510",
+      "domain": ".1024tera.com",
+      "path": "/",
+      "expires": 1821869509.645699,
+      "httpOnly": false,
+      "secure": false,
+      "sameSite": "Lax"
+    },
+    {
+      "name": "_ga_K6JMPYL99R",
+      "value": "GS2.1.s1787309509$o1$g0$t1787309509$j60$l0$h0",
+      "domain": ".1024tera.com",
+      "path": "/",
+      "expires": 1821869509.675882,
+      "httpOnly": false,
+      "secure": false,
+      "sameSite": "Lax"
+    },
+    {
+      "name": "test_cookie",
+      "value": "CheckForPermission",
+      "domain": ".doubleclick.net",
+      "path": "/",
+      "expires": 1787310410.119547,
+      "httpOnly": false,
+      "secure": true,
+      "sameSite": "None"
+    },
+    {
+      "name": "g_state",
+      "value": "{\"i_l\":0,\"i_ll\":1787309511584,\"i_b\":\"zs8dd2VM1Gt5IsY4trqAs0h0vUcUgdNK1Be565sLxJM\",\"i_e\":{\"enable_itp_optimization\":24},\"i_et\":1787309511584}",
+      "domain": "www.1024tera.com",
+      "path": "/",
+      "expires": 1802861511,
+      "httpOnly": false,
+      "secure": false,
+      "sameSite": "Lax"
+    },
+    {
+      "name": "NID",
+      "value": "534=knwx2-VNmROaX_cWB9CI1UzW0e-ZtkDJQWELrGRxUvmlT_FToO_00HnOQhWhjxnKsz7bS0vSJ2E-BgVRhwe9S6W2cBEbdRN0T1q-dInmFAgAMtdz-ouyvJxIhBr8BrVxQ9vCktG9aYLPsUpnAOX3sjU7B_HGvU2sDnKk6FMASAzLGuNChK9rKe4J5uEoJx5oEg7z4ag",
+      "domain": ".google.com",
+      "path": "/",
+      "expires": 1803120717.845757,
+      "httpOnly": true,
+      "secure": true,
+      "sameSite": "None"
+    },
+    {
+      "name": "ri",
+      "value": "dm",
+      "domain": ".1024tera.com",
+      "path": "/",
+      "expires": 1787395925.722639,
+      "httpOnly": false,
+      "secure": true,
+      "sameSite": "Lax"
+    }
+  ],
+  "sessionData": {
+    "DOC_CHAT_EXPAND": "true",
+    "redirect_surl": "1JfqxU4ikKu67SKF8cxb0Q",
+    "VIDEO_CHAT_FOLDED": "false",
+    "_gcl_ls": "{\"schema\":\"gcl\",\"version\":1,\"gsid_dc\":{\"value\":{\"joinId\":\"_S7wzbyw4Dk99CfszE9eszLZgNKqDi5h1w\",\"lastJoinedTimeMs\":1787309509584},\"expires\":1787309809584},\"gcl_ctr\":{\"value\":{\"value\":0,\"timeouts\":0,\"errors\":0,\"eopCount\":0,\"creationTimeMs\":1787309509587},\"expires\":1795085509587}}",
+    "ai_link_ratio": "10",
+    "webSwiperBannerAb": "32",
+    "fbapc_756701921753953": "{\"config\":{\"fedcmDefault\":false},\"expiresAt\":1787395909228}"
+  },
+  "updatedAt": "2026-08-21T10:52:20.710Z"
+}
